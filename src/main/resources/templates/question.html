@@ -1,9 +1,18 @@
 <form action="/submit" method="post">
     <p th:text="'Пользователь: ' + ${userName}"</p>
-    <p th:text="'Вопрос ' + ${questionNumber} + ' : ' + ${question}">Вопрос</p>
+    <body>
+        <h3 th:text="'Категория вопроса: ' + ${category}">Категория</h3>
+        <h3 th:text="'Tecт из ' + ${questionLimit} +' вопросов. Вопрос №' + ${questionNumber} + '. ' + ${question}">Вопрос</h3>
+        <img th:src="@{${imageName}}" alt="Изображение"/>
+        <br/>
+    </body>
+
     <input type="number" id="questionCount" name="questionCount" th:value="${questionNumber}" style="display: none">
     <input type="number" id="correctAnswersCount" name="correctAnswersCount" th:value="${correctAnswersSum}" style="display: none">
     <input type="text" id="userName" name="userName" th:value="${userName}" style="display: none">
+    <input type="text" id="correctAnswer" name="correctAnswer" th:value="${answer}" style="display: none">
+    <input type="text" id="categoryName" name="categoryName" th:value="${category}" style="display: none">
+
     <label th:for="option1">
         <input type="radio" id="option1" name="option" value="1" th:value="${option1}">
         <span th:text="${option1}">1.</span>
@@ -19,12 +28,8 @@
         <span th:text="${option3}">3.</span>
     </label>
     <br/>
-    <label th:for="option1">
-        <input type="radio" id="option4" name="option" value="4" th:value="${option4}">
-        <span th:text="${option4}">4.</span>
-    </label>
     <br/>
-    <br/>
+
     <a href="/submit">
         <button>Подтвердить ответ</button>
     </a>

@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: pdd
+    question-test-count: 3
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+
+  flyway:
+    enabled: false
+  hikari:
+    minimum-idle: 1
+    maximum-pool-size: 2
+    connection-timeout: 5000
+    idle-timeout: 5000
+    max-lifetime: 300000
+    pool-name: HikariPoolIncidentResult
+  datasource:
+    load-questions: true
+    url: jdbc:postgresql://localhost:5500/localPsql
+    driver-class-name: org.postgresql.Driver
+    username: admin
+    password: admin
+
+
