@@ -1,0 +1,7 @@
+<form action="/signIn" method="post">
+    <p th:text="${signInHead != 'empty'} ? ${signInHead} : 'Введите имя пользователя'"></p>
+    <input type="text" name="userName">
+    <a href="/signIn">
+        <button>Подтвердить имя</button>
+    </a>
+</form>

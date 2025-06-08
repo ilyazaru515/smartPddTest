@@ -1,0 +1,13 @@
+<p th:text="'Пользователь: ' + ${userName}"</p>
+<p th:text="'Тест окончен. Правильных ответов: ' + ${correctAnswersSum} + ' из ' + ${questionCount}"</p>
+<form action="/firstSignIn" method="post">
+    <a href="/firstSignIn">
+        <button>Сменить пользователя</button>
+    </a>
+</form>
+<form action="/signIn" method="post">
+    <input type="text" id="userName" name="userName" th:value="${userName}" style="display: none">
+    <a href="/signIn">
+        <button>Начать новый тест под тем же пользователем</button>
+    </a>
+</form>
