@@ -23,7 +23,7 @@ public class FileReader {
         try (InputStream inputStream = Files.newInputStream(path) ;
              InputStreamReader streamReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
              BufferedReader reader = new BufferedReader(streamReader);) {
-            var builder = new StringBuilder();
+            StringBuilder builder = new StringBuilder();
             reader.lines().forEach( line -> {
                 builder.append(line);
                 builder.append("\n");

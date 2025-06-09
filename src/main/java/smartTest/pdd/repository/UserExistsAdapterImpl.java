@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import smartTest.pdd.question.entity.UserStatsEntity;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -14,16 +15,16 @@ public class UserExistsAdapterImpl implements UserStatsAdapter{
 
     @Override
     public UserStatsEntity updatedUserStats(String userName, String category, boolean answerIsCorrect) {
-        var userStatsOpt = userStatsRepository.getByNameAndCategory(userName, category);
+        Optional<UserStatsEntity> userStatsOpt = userStatsRepository.getByNameAndCategory(userName, category);
         if (userStatsOpt.isPresent()) {
-            var storedUserStat = userStatsOpt.get();
+            UserStatsEntity storedUserStat = userStatsOpt.get();
             storedUserStat.setTotalAnswer(storedUserStat.getTotalAnswer() + 1);
             if (answerIsCorrect) {
                 storedUserStat.setCorrectAnswer(storedUserStat.getCorrectAnswer() + 1);
             }
             return userStatsRepository.save(storedUserStat);
         } else {
-            var newUserStats = new UserStatsEntity();
+            UserStatsEntity newUserStats = new UserStatsEntity();
             newUserStats.setId(UUID.randomUUID().toString());
             newUserStats.setUserName(userName);
             newUserStats.setCategory(category);

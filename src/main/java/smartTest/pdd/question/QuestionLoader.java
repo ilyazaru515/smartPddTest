@@ -27,13 +27,13 @@ public class QuestionLoader {
     @PostConstruct
     void loadQuestion() {
         try {
-            var crosswalkQuestions = objectMapper.readValue(fileReader.readFile("questions/crosswalk.json"), new TypeReference<List<QuestionEntity>>(){});
-            var overtrakingQuestions = objectMapper.readValue(fileReader.readFile("questions/overtraking.json"), new TypeReference<List<QuestionEntity>>(){});
-            var roadMarkingsQuestions = objectMapper.readValue(fileReader.readFile("questions/roadMarkings.json"), new TypeReference<List<QuestionEntity>>(){});
-            var roadSignsQuestions = objectMapper.readValue(fileReader.readFile("questions/roadSigns.json"), new TypeReference<List<QuestionEntity>>(){});
-            var speedQuestions = objectMapper.readValue(fileReader.readFile("questions/speed.json"), new TypeReference<List<QuestionEntity>>(){});
-            var railWays = objectMapper.readValue(fileReader.readFile("questions/railWays.json"), new TypeReference<List<QuestionEntity>>(){});
-            var stop = objectMapper.readValue(fileReader.readFile("questions/stop.json"), new TypeReference<List<QuestionEntity>>(){});
+            List<QuestionEntity> crosswalkQuestions = objectMapper.readValue(fileReader.readFile("questions/crosswalk.json"), new TypeReference<List<QuestionEntity>>(){});
+            List<QuestionEntity> overtrakingQuestions = objectMapper.readValue(fileReader.readFile("questions/overtraking.json"), new TypeReference<List<QuestionEntity>>(){});
+            List<QuestionEntity> roadMarkingsQuestions = objectMapper.readValue(fileReader.readFile("questions/roadMarkings.json"), new TypeReference<List<QuestionEntity>>(){});
+            List<QuestionEntity> roadSignsQuestions = objectMapper.readValue(fileReader.readFile("questions/roadSigns.json"), new TypeReference<List<QuestionEntity>>(){});
+            List<QuestionEntity> speedQuestions = objectMapper.readValue(fileReader.readFile("questions/speed.json"), new TypeReference<List<QuestionEntity>>(){});
+            List<QuestionEntity> railWays = objectMapper.readValue(fileReader.readFile("questions/railWays.json"), new TypeReference<List<QuestionEntity>>(){});
+            List<QuestionEntity> stop = objectMapper.readValue(fileReader.readFile("questions/stop.json"), new TypeReference<List<QuestionEntity>>(){});
             crosswalkQuestions.forEach(questionRepository::save);
             overtrakingQuestions.forEach(questionRepository::save);
             roadMarkingsQuestions.forEach(questionRepository::save);

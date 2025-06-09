@@ -28,7 +28,7 @@ public class QuestionAdapterImpl implements QuestionsAdapter {
         if (category == null) {
             return questionRepository.getRandomQuestion();
         } else {
-            var question = questionRepository.getRandomQuestionsByCategory(category);
+            QuestionEntity question = questionRepository.getRandomQuestionsByCategory(category);
             if (question == null) {
                 question = questionRepository.getRandomQuestion();
             }
