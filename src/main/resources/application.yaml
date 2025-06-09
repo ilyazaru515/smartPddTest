@@ -1,7 +1,8 @@
 spring:
   application:
     name: pdd
-    question-test-count: 3
+    question-test-count: 10
+    weak-category-answer-probability-percent: 70
   jpa:
     hibernate:
       ddl-auto: update

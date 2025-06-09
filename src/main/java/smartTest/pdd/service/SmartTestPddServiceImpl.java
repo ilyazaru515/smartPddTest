@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import smartTest.pdd.controller.dto.RequestParams;
 import smartTest.pdd.model.ModelUpdater;
+import smartTest.pdd.question.SmartQuestionDetector;
+import smartTest.pdd.question.entity.QuestionEntity;
 import smartTest.pdd.repository.QuestionsAdapter;
 import smartTest.pdd.repository.UserStatsAdapter;
 
@@ -14,34 +16,29 @@ import smartTest.pdd.repository.UserStatsAdapter;
 @RequiredArgsConstructor
 public class SmartTestPddServiceImpl implements SmartTestPddService {
     private final UserStatsAdapter userStatsAdapter;
-    private final QuestionsAdapter questionsAdapter;
+    private final SmartQuestionDetector smartQuestionDetector;
     private final ModelUpdater modelUpdater;
     @Value("${spring.application.question-test-count:10}")
     private int questionLimit;
 
     @Override
     public String submitQuestion(RequestParams requestParams, Model model) {
-//        if (userStatsAdapter.userExists(requestParams.getUserName())) {
-            var answerIsCorrect = requestParams.getCorrectAnswer().equals(requestParams.getOption());
+            boolean
+                    answerIsCorrect = requestParams.getCorrectAnswer().equals(requestParams.getOption());
             userStatsAdapter.updatedUserStats(requestParams.getUserName(), requestParams.getCategory(), answerIsCorrect);
             if (requestParams.getQuestionCount() < questionLimit) {
-                var newQuestion = questionsAdapter.getRandomQuestionExcite(null);
+                QuestionEntity newQuestion = smartQuestionDetector.detect(requestParams.getUserName());
                 modelUpdater.updateByQuestion(requestParams, newQuestion, model, answerIsCorrect);
                 return "question";
             } else {
                 modelUpdater.updateForResults(requestParams, model, answerIsCorrect);
                 return "results";
             }
-//        } else {
-//            var question = questionsAdapter.getRandomQuestionExcite(null);
-//            modelUpdater.updateByFirstQuestion(requestParams, question, model);
-//            return "question";
-//        }
     }
 
     @Override
     public String submitFirstQuestion(RequestParams requestParams, Model model) {
-        var question = questionsAdapter.getRandomQuestionExcite(null);
+        QuestionEntity question = smartQuestionDetector.detect(requestParams.getUserName());
         modelUpdater.updateByFirstQuestion(requestParams, question, model);
         return "question";
     }

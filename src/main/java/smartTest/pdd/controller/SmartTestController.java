@@ -27,24 +27,6 @@ public class SmartTestController {
         return smartTestPddService.submitQuestion(
                 new RequestParams(correctAnswersCount, questionCount, option, userName, correctAnswer, categoryName),
                 model);
-//        if (questionCount == 2) {
-//            model.addAttribute("correctAnswersSum", correctAnswersCount + 1);
-//            model.addAttribute("questionCount", questionCount);
-//            model.addAttribute("questionNumber", questionCount);
-//            model.addAttribute("userName", userName);
-//            return "results";
-//        } else {
-//            model.addAttribute("question", "Вопрос " + option);
-//            model.addAttribute("option1", "На право " + random.nextInt(100));
-//            model.addAttribute("option2", "На лево " + random.nextInt(100));
-//            model.addAttribute("option3", "Назад " + random.nextInt(100));
-//            model.addAttribute("option4", "Вперед" + random.nextInt(100));
-//            model.addAttribute("userName", userName);
-//            model.addAttribute("questionNumber", questionCount + 1);
-//            model.addAttribute("correctAnswersSum", correctAnswersCount + 1);
-//            model.addAttribute("imageName", "images/img1-1.png");
-//            return "question";
-//        }
     }
 
     @PostMapping(value = "/signIn")

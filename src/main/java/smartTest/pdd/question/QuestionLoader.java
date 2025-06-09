@@ -32,11 +32,15 @@ public class QuestionLoader {
             var roadMarkingsQuestions = objectMapper.readValue(fileReader.readFile("questions/roadMarkings.json"), new TypeReference<List<QuestionEntity>>(){});
             var roadSignsQuestions = objectMapper.readValue(fileReader.readFile("questions/roadSigns.json"), new TypeReference<List<QuestionEntity>>(){});
             var speedQuestions = objectMapper.readValue(fileReader.readFile("questions/speed.json"), new TypeReference<List<QuestionEntity>>(){});
+            var railWays = objectMapper.readValue(fileReader.readFile("questions/railWays.json"), new TypeReference<List<QuestionEntity>>(){});
+            var stop = objectMapper.readValue(fileReader.readFile("questions/stop.json"), new TypeReference<List<QuestionEntity>>(){});
             crosswalkQuestions.forEach(questionRepository::save);
             overtrakingQuestions.forEach(questionRepository::save);
             roadMarkingsQuestions.forEach(questionRepository::save);
             roadSignsQuestions.forEach(questionRepository::save);
             speedQuestions.forEach(questionRepository::save);
+            railWays.forEach(questionRepository::save);
+            stop.forEach(questionRepository::save);
         } catch (Exception e) {
             log.error("Failed load questions: " + e.getMessage(), e);
         }

@@ -6,14 +6,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import smartTest.pdd.question.entity.UserStatsEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface UserStatsRepository extends CrudRepository<UserStatsEntity, String> {
-
-    @Query(value = "SELECT COUNT(*) FROM pdd.user_stats WHERE user_name = :userName",
-            nativeQuery = true)
-    Integer userExists(@Param("userName") String userName);
 
     @Query(value = "SELECT * FROM pdd.user_stats WHERE user_name = :userName AND category = :category",
             nativeQuery = true)
@@ -21,4 +18,8 @@ public interface UserStatsRepository extends CrudRepository<UserStatsEntity, Str
             @Param("userName") String userName,
             @Param("category") String category
     );
+
+    @Query(value = "SELECT * FROM pdd.user_stats WHERE user_name = :userName",
+            nativeQuery = true)
+    List<UserStatsEntity> getUserStats(@Param("userName") String userName);
 }

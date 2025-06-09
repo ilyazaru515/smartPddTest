@@ -12,9 +12,27 @@ public class QuestionAdapterImpl implements QuestionsAdapter {
     @Override
     public QuestionEntity getRandomQuestionExcite(String excitedCategory) {
         if (excitedCategory == null) {
-            return questionRepository.getRandomQuestionExcite("");
+            return questionRepository.getRandomQuestion();
         } else {
             return questionRepository.getRandomQuestionExcite(excitedCategory);
+        }
+    }
+
+    @Override
+    public QuestionEntity getRandomQuestion() {
+        return questionRepository.getRandomQuestion();
+    }
+
+    @Override
+    public QuestionEntity getRandomQuestionsByCategory(String category) {
+        if (category == null) {
+            return questionRepository.getRandomQuestion();
+        } else {
+            var question = questionRepository.getRandomQuestionsByCategory(category);
+            if (question == null) {
+                question = questionRepository.getRandomQuestion();
+            }
+            return question;
         }
     }
 }

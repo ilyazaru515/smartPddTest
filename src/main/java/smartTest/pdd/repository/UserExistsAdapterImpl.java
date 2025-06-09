@@ -4,18 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import smartTest.pdd.question.entity.UserStatsEntity;
 
+import java.util.List;
 import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
 public class UserExistsAdapterImpl implements UserStatsAdapter{
     private final UserStatsRepository userStatsRepository;
-
-    @Override
-    public boolean userExists(String userName) {
-        var countRows = userStatsRepository.userExists(userName);
-        return countRows > 0;
-    }
 
     @Override
     public UserStatsEntity updatedUserStats(String userName, String category, boolean answerIsCorrect) {
@@ -40,5 +35,10 @@ public class UserExistsAdapterImpl implements UserStatsAdapter{
             }
             return userStatsRepository.save(newUserStats);
         }
+    }
+
+    @Override
+    public List<UserStatsEntity> getUserStats(String userName) {
+        return userStatsRepository.getUserStats(userName);
     }
 }
