@@ -31,7 +31,8 @@ public class SmartTestPddServiceImpl implements SmartTestPddService {
                 modelUpdater.updateByQuestion(requestParams, newQuestion, model, answerIsCorrect);
                 return "question";
             } else {
-                modelUpdater.updateForResults(requestParams, model, answerIsCorrect);
+                String weakCategory = smartQuestionDetector.detectWeakCategory(requestParams.getUserName());
+                modelUpdater.updateForResults(requestParams, model, answerIsCorrect, weakCategory);
                 return "results";
             }
     }

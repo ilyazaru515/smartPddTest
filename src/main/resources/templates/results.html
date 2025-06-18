@@ -1,5 +1,7 @@
 <p th:text="'Пользователь: ' + ${userName}"</p>
 <p th:text="'Тест окончен. Правильных ответов: ' + ${correctAnswersSum} + ' из ' + ${questionCount}"</p>
+</br>
+<p th:text="'Тема по которой наименьший процент правильных ответов: ' + ${weakCategory}"</p>
 <form action="/firstSignIn" method="post">
     <a href="/firstSignIn">
         <button>Сменить пользователя</button>

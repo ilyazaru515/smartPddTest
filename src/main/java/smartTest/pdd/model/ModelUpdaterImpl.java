@@ -45,7 +45,7 @@ public class ModelUpdaterImpl implements ModelUpdater {
     }
 
     @Override
-    public void updateForResults(RequestParams requestParams, Model model, boolean answerIsCorrect) {
+    public void updateForResults(RequestParams requestParams, Model model, boolean answerIsCorrect, String weakCategory) {
         if (answerIsCorrect) {
             model.addAttribute("correctAnswersSum", requestParams.getCorrectAnswersCount() + 1);
         } else {
@@ -53,5 +53,6 @@ public class ModelUpdaterImpl implements ModelUpdater {
         }
         model.addAttribute("questionCount", requestParams.getQuestionCount());
         model.addAttribute("userName", requestParams.getUserName());
+        model.addAttribute("weakCategory", weakCategory);
     }
 }

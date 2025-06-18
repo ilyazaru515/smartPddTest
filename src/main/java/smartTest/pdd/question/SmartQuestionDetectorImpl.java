@@ -21,19 +21,38 @@ public class SmartQuestionDetectorImpl implements SmartQuestionDetector {
 
     @Override
     public QuestionEntity detect(String userName) {
+        String categoryLessPercentCorrectAnswer = detectWeakCategory(userName);
+
+        if (categoryLessPercentCorrectAnswer == null || categoryLessPercentCorrectAnswer.isBlank()) {
+            return questionsAdapter.getRandomQuestion();
+        }
+
+        if (isWeakCategoryQuestion()) {
+            return questionsAdapter.getRandomQuestionsByCategory(categoryLessPercentCorrectAnswer);
+        } else {
+            return questionsAdapter.getRandomQuestionExcite(categoryLessPercentCorrectAnswer);
+        }
+    }
+
+    @Override
+    public String detectWeakCategory(String userName) {
         List<UserStatsEntity> userStats = userStatsAdapter.getUserStats(userName);
 
         if (userStats == null || userStats.isEmpty()) {
-            return questionsAdapter.getRandomQuestion();
+            return null;
         }
 
         Map<String, Double> percentCorrectAnswer = new HashMap<>();
         userStats.stream().forEach(stat -> {
-            double percent = (double) 100 * (stat.getCorrectAnswer() == 0 ? 1 : stat.getCorrectAnswer()) / stat.getTotalAnswer();
-            percentCorrectAnswer.put(stat.getCategory(), percent);
+            if (stat.getCorrectAnswer() == 0) {
+                percentCorrectAnswer.put(stat.getCategory(), 0d);
+            } else {
+                double percent = (double) 100 * stat.getCorrectAnswer() / stat.getTotalAnswer();
+                percentCorrectAnswer.put(stat.getCategory(), percent);
+            }
         });
 
-        String categoryLessPercentCorrectAnswer = percentCorrectAnswer.entrySet().stream()
+        return percentCorrectAnswer.entrySet().stream()
                 .sorted((entry1, entry2) -> {
                     if (entry2.getValue() > entry1.getValue()) return -1;
                     else if (entry2.getValue() < entry1.getValue()) return 1;
@@ -41,12 +60,6 @@ public class SmartQuestionDetectorImpl implements SmartQuestionDetector {
                 }).map(Map.Entry::getKey)
                 .findFirst()
                 .get();
-
-        if (isWeakCategoryQuestion()) {
-            return questionsAdapter.getRandomQuestionsByCategory(categoryLessPercentCorrectAnswer);
-        } else {
-            return questionsAdapter.getRandomQuestionExcite(categoryLessPercentCorrectAnswer);
-        }
     }
 
     private boolean isWeakCategoryQuestion() {
